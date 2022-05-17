@@ -1,9 +1,9 @@
 import './App.css';
-import HomePage from './components/HomePage';
+import AdminPage from './components/AdminPage';
 
 function App() {
   return (
-    <HomePage />
+    <AdminPage />
   );
 }
 
