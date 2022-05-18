@@ -22,5 +22,7 @@ export const uploadPackage = (query) => {
       if (response.status !== 200) {
         throw Error("Fail to upload new package");
       }
+
+      return response.json();
     });
 };
