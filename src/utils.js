@@ -1,5 +1,5 @@
 const domain = "http://localhost:8080";
-
+ 
 export const login = (credential, asHost) => {
   const loginUrl = `${domain}/authenticate/${asHost ? "host" : "guest"}`;
   return fetch(loginUrl, {
@@ -12,11 +12,11 @@ export const login = (credential, asHost) => {
     if (response.status !== 200) {
       throw Error("Fail to log in");
     }
-
+ 
     return response.json();
   });
 };
-
+ 
 export const register = (credential, asHost) => {
   const registerUrl = `${domain}/register/${asHost ? "host" : "guest"}`;
   return fetch(registerUrl, {
@@ -31,149 +31,47 @@ export const register = (credential, asHost) => {
     }
   });
 };
-
-export const getReservations = () => {
+ 
+export const getOrders = () => {
   const authToken = localStorage.getItem("authToken");
-  const listReservationsUrl = `${domain}/reservations`;
-
+  const listOrdersUrl = `${domain}/history/guest`;
+ 
   return fetch(listReservationsUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
   }).then((response) => {
     if (response.status !== 200) {
-      throw Error("Fail to get reservation list");
+      throw Error("Fail to get order history list");
     }
-
+ 
     return response.json();
   });
 };
 
-export const getStaysByHost = () => {
-  const authToken = localStorage.getItem("authToken");
-  const listStaysUrl = `${domain}/stays/`;
+export const uploadPackage = (query) => {
+    const authToken = localStorage.getItem("authToken");
+    const uploadPackageUrl = new URL(`${domain}/search/`);
+    uploadPackageUrl.searchParams.append("weight", query.weight);
+    uploadPackageUrl.searchParams.append("height", query.height);
+    uploadPackageUrl.searchParams.append("length", query.length);
+    uploadPackageUrl.searchParams.append("width", query.width);
+    uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
+    uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
+    // uploadPackageUrl.searchParams.append(
+    //    "pickuptime",
+    //    query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
+    // );
+ 
+    return fetch(uploadPackageUrl, {
+      headers: {
+        Authorization: `Bearer ${authToken}`,
+      },
+    }).then((response) => {
+      if (response.status !== 200) {
+        throw Error("Fail to upload new package");
+      }
 
-  return fetch(listStaysUrl, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to get stay list");
-    }
-
-    return response.json();
-  });
-};
-
-export const searchStays = (query) => {
-  const authToken = localStorage.getItem("authToken");
-  const searchStaysUrl = new URL(`${domain}/search/`);
-  searchStaysUrl.searchParams.append("guest_number", query.guest_number);
-  searchStaysUrl.searchParams.append(
-    "checkin_date",
-    query.checkin_date.format("YYYY-MM-DD")
-  );
-  searchStaysUrl.searchParams.append(
-    "checkout_date",
-    query.checkout_date.format("YYYY-MM-DD")
-  );
-  searchStaysUrl.searchParams.append("lat", 37);
-  searchStaysUrl.searchParams.append("lon", -122);
-
-  return fetch(searchStaysUrl, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to search stays");
-    }
-
-    return response.json();
-  });
-};
-
-export const deleteStay = (stayId) => {
-  const authToken = localStorage.getItem("authToken");
-  const deleteStayUrl = `${domain}/stays/${stayId}`;
-
-  return fetch(deleteStayUrl, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to delete stay");
-    }
-  });
-};
-
-export const bookStay = (data) => {
-  const authToken = localStorage.getItem("authToken");
-  const bookStayUrl = `${domain}/reservations`;
-
-  return fetch(bookStayUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to book reservation");
-    }
-  });
-};
-
-export const cancelReservation = (reservationId) => {
-  const authToken = localStorage.getItem("authToken");
-  const cancelReservationUrl = `${domain}/reservations/${reservationId}`;
-
-  return fetch(cancelReservationUrl, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to cancel reservation");
-    }
-  });
-};
-
-export const getReservationsByStay = (stayId) => {
-  const authToken = localStorage.getItem("authToken");
-  const getReservationByStayUrl = `${domain}/stays/reservations/${stayId}`;
-
-  return fetch(getReservationByStayUrl, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to get reservations by stay");
-    }
-
-    return response.json();
-  });
-};
-
-export const uploadStay = (data) => {
-  const authToken = localStorage.getItem("authToken");
-  const uploadStayUrl = `${domain}/stays`;
-
-  return fetch(uploadStayUrl, {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-    body: data,
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to upload stay");
-    }
-  });
+      return response.json();
+    });
 };
