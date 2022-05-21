@@ -20,11 +20,11 @@ export const adminStatus = () => {
  
  
 //admin side operations
-export const adminOps = (query) => {
+export const adminOps = (id, status) => {
     const authToken = localStorage.getItem("authToken");
-    const adminOpsUrl = new URL(`${domain}/update/`);
-    adminOpsUrl.searchParams.append("ordernum", query.ordernum);
-    adminOpsUrl.searchParams.append("orderstatus", query.order_status);
+    const adminOpsUrl = new URL(`${domain}/orders/update/`);
+    adminOpsUrl.searchParams.append("order_ID", id);
+    adminOpsUrl.searchParams.append("order_status", status);
  
     return fetch(adminOpsUrl, {
         method: "PUT",

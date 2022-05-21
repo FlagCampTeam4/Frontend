@@ -74,11 +74,24 @@ export class OrderInfoButton extends React.Component {
 
 class PickedUpButton extends React.Component {
   state = {
-      loading: false,
+    loading: false,
   };
 
-  handleOrderPickUp = () => {
-    
+  handleOrderPickUp = async () => {
+    this.setState = {
+      loading: true,
+    };
+
+    try{
+      await adminOps(this.props.id, 1);
+      message.success("Successfully update operation pick up!");
+    }catch (error) {
+      message.error(error.message);
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
   };
     
   render() {
@@ -120,8 +133,21 @@ class DeliveredButton extends React.Component {
       loading: false,
   };
 
-  handleOrderDelivered = () => {
-    
+  handleOrderDelivered = async () => {
+    this.setState = {
+      loading: true,
+    };
+
+    try{
+      await adminOps(this.props.id, 2);
+      message.success("Successfully update operation delivered!");
+    }catch (error) {
+      message.error(error.message);
+    } finally {
+      this.setState({
+        loading: false,
+      });
+    }
   };
     
   render() {
