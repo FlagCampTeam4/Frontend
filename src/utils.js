@@ -1,4 +1,4 @@
-const domain = "";
+const domain = "localhost:3000";
 
 export const uploadPackage = (query) => {
     const authToken = localStorage.getItem("authToken");
@@ -9,10 +9,10 @@ export const uploadPackage = (query) => {
     uploadPackageUrl.searchParams.append("width", query.width);
     uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
     uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
-    uploadPackageUrl.searchParams.append(
-      "pickuptime",
-      query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
-    );
+    // uploadPackageUrl.searchParams.append(
+    //    "pickuptime",
+    //    query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
+    // );
  
     return fetch(uploadPackageUrl, {
       headers: {
