@@ -64,3 +64,19 @@ export const uploadPackage = (query) => {
       return response.json();
     });
 };
+
+export const succeed = () => {
+  const authToken = localStorage.getItem("authToken");
+  const succeedUrl = `${domain}/order`;
+ 
+  return fetch(succeedUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get the package info");
+    }
+  });
+};
+

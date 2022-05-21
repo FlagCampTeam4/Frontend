@@ -14,8 +14,9 @@ import {
   DatePicker,
   message,
   Card,
+  Modal,
 } from 'antd';
-import {uploadPackage} from "../utils";
+import {uploadPackage, succeed} from "../utils";
  
  
 class NewPackagePage extends React.Component {
@@ -48,8 +49,14 @@ class NewPackagePage extends React.Component {
       });
    
       try {
-        await uploadPackage(formData);
+        const res = await uploadPackage(formInstance.getFieldsValue(true));
         message.success("Submit Successfully");
+        Modal.success({
+          title: 'Our Recommendation',
+          content: res,
+        });
+        //calling back succeed request to backend
+        succeed();
       } catch (error) {
         message.error(error.message);
       } finally {
