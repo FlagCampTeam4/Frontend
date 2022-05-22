@@ -180,16 +180,16 @@ class ActionButton extends React.Component {
         <Menu
           onClick={onMenuClick}
           items={[
+            // {
+            //   key: '1',
+            //   label: 'Order Shipped',
+            // },
             {
               key: '1',
-              label: 'Order Shipped',
-            },
-            {
-              key: '2',
               label: 'Order Picked Up',
             },
             {
-              key: '3',
+              key: '2',
               label: 'Order Delivered',
             },
           ]}
