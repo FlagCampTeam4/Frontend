@@ -3,13 +3,20 @@ import {
   Form,
   Input,
   InputNumber,
+  Cascader,
   Select,
+  Row,
+  Col,
+  Checkbox,
   Button,
+  AutoComplete,
   Divider,
   DatePicker,
   message,
+  Card,
 } from 'antd';
-import {uploadPackage} from "../utils"; 
+import {uploadPackage} from "../utils";
+ 
  
 class NewPackagePage extends React.Component {
   formRef = React.createRef();
@@ -90,9 +97,10 @@ class NewPackagePage extends React.Component {
       );
   
       return (
-          <Form {...layout} className="OrderInfo" ref={this.formRef} onFinish={this.onFinish} validateMessages={validateMessages} labelCol={{ span: 7 }} wrapperCol={{ span: 8 }}>
-            <div>Sender</div>
-            <Divider />
+        <Card className="OrderCard">
+          <Form {...layout} className="OrderInfo" ref={this.formRef} onFinish={this.onFinish} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
+            <p className="FormText">SENDER</p>
+            {/* <Divider /> */}
             <Form.Item name={['sender', 'name']} label="Name" rules={[{ required: true }]}>
                 <Input/>    
             </Form.Item>
@@ -104,9 +112,9 @@ class NewPackagePage extends React.Component {
                
             </Form.Item>
   
-            <p>Recipient</p>
-            <Divider />
-            <Form.Item name={['recipient', 'name']} label="Name" rules={[{ required: true }]}>
+            <p className="FormText">RECIPIENT</p>
+            {/* <Divider /> */}
+            <Form.Item  name={['recipient', 'name']} label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
             <Form.Item name={['recipient', 'phone']} label="Phone" >
@@ -118,7 +126,7 @@ class NewPackagePage extends React.Component {
                     </Select>
                   </Form.Item>
                   <Form.Item noStyle name={['recipient','phoneNo']}>
-                    <Input style={{ width: '89%' }}/>
+                    <Input style={{ width: '85%' }}/>
                   </Form.Item>
               </Input.Group>
             </Form.Item>
@@ -126,8 +134,8 @@ class NewPackagePage extends React.Component {
               <Input />
             </Form.Item>
   
-            <p>Object</p>
-            <Divider />
+            <p className="FormText">PARCEL</p>
+            {/* <Divider /> */}
             <Form.Item name='weight' label="Weight" rules={[{ required: true }]}>
               <InputNumber addonAfter="lb"/>
             </Form.Item>
@@ -144,14 +152,16 @@ class NewPackagePage extends React.Component {
               <DatePicker onChange={onChange} />
             </Form.Item>
   
-            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 8 }}>
+            <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 11 }}>
               <Button type="primary" onClick={this.handleSubmit} disabled={this.state.loading} >
                 Submit
               </Button>
             </Form.Item>
           </Form>
+          </Card>
       );
     };
   }
- 
+   
+//const NewPackagePage = Form.create({name:'newOederInfo'})(NewOrderForm) 
 export default NewPackagePage;
