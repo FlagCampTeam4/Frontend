@@ -2,6 +2,7 @@ import { Layout, Dropdown, Menu, Button } from "antd";
 import { Tabs } from "antd";
 import React from "react";
 import NewPackagePage from './components/NewPackagePage';
+import background01 from './image/background01.jpg';
  
 
 
@@ -23,7 +24,7 @@ class OrderMainPage extends React.Component{
         </div>
       </Header>
       <Content
-        style={{ height: "calc(100% - 64px)", margin: 10, overflow: "auto"}}
+      style={{backgroundImage:`url(${background01})`, height: "calc(100% - 64px)", margin: 10, overflow: "auto"}}
       >
          <Tabs defaultActiveKey="1" onChange={callback}>
             <TabPane tab="Order" key="1">
