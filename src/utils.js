@@ -1,5 +1,6 @@
 const domain = "";
 
+
 export const login = (credential, asHost) => {
   const loginUrl = `${domain}/authenticate/${asHost ? "admin" : "guest"}`;
   return fetch(loginUrl, {
@@ -44,10 +45,11 @@ export const uploadPackage = (query) => {
     uploadPackageUrl.searchParams.append("width", query.width);
     uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
     uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
-    // uploadPackageUrl.searchParams.append(
-    //    "pickuptime",
-    //    query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
-    // );
+
+    uploadPackageUrl.searchParams.append(
+        "pickuptime",
+        query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
+    );
  
     return fetch(uploadPackageUrl, {
       headers: {

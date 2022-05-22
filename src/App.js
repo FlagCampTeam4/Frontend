@@ -1,6 +1,8 @@
+
 import { Layout, Dropdown, Menu, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import LoginPage from "./components/LoginPage";
+import OrderMainPage from './OrderMainPage';
 import React from "react";
  
 const { Header, Content } = Layout;
@@ -46,7 +48,7 @@ class App extends React.Component {
       return <div>host home page</div>;
     }
  
-    return <div>guest home page</div>;
+    return <OrderMainPage />;
   };
  
   userMenu = (
