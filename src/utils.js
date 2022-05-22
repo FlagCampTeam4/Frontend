@@ -1,7 +1,7 @@
-const domain = "http://localhost:8080";
- 
+const domain = "";
+
 export const login = (credential, asHost) => {
-  const loginUrl = `${domain}/authenticate/${asHost ? "host" : "guest"}`;
+  const loginUrl = `${domain}/authenticate/${asHost ? "admin" : "guest"}`;
   return fetch(loginUrl, {
     method: "POST",
     headers: {
@@ -17,8 +17,9 @@ export const login = (credential, asHost) => {
   });
 };
  
+//login page register
 export const register = (credential, asHost) => {
-  const registerUrl = `${domain}/register/${asHost ? "host" : "guest"}`;
+  const registerUrl = `${domain}/register/${asHost ? "admin" : "guest"}`;
   return fetch(registerUrl, {
     method: "POST",
     headers: {
@@ -31,23 +32,8 @@ export const register = (credential, asHost) => {
     }
   });
 };
+
  
-export const getOrders = () => {
-  const authToken = localStorage.getItem("authToken");
-  const listOrdersUrl = `${domain}/history/guest`;
- 
-  return fetch(listReservationsUrl, {
-    headers: {
-      Authorization: `Bearer ${authToken}`,
-    },
-  }).then((response) => {
-    if (response.status !== 200) {
-      throw Error("Fail to get order history list");
-    }
- 
-    return response.json();
-  });
-};
 
 export const uploadPackage = (query) => {
     const authToken = localStorage.getItem("authToken");
