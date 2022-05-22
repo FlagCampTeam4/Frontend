@@ -1,7 +1,7 @@
-const domain = "localhost:3000";
+const domain = "";
 
 export const uploadPackage = (query) => {
-    const authToken = localStorage.getItem("authToken");
+    //const authToken = localStorage.getItem("authToken");
     const uploadPackageUrl = new URL(`${domain}/search/`);
     uploadPackageUrl.searchParams.append("weight", query.weight);
     uploadPackageUrl.searchParams.append("height", query.height);
@@ -10,13 +10,13 @@ export const uploadPackage = (query) => {
     uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
     uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
     uploadPackageUrl.searchParams.append(
-        "pickuptime",
+         "pickuptime",
         query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
-   );
+ );
  
     return fetch(uploadPackageUrl, {
       headers: {
-        Authorization: `Bearer ${authToken}`,
+        //Authorization: `Bearer ${authToken}`,
       },
     }).then((response) => {
       if (response.status !== 200) {
