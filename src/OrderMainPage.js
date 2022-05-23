@@ -1,8 +1,8 @@
-import { Layout, Dropdown, Menu, Button } from "antd";
+import { Layout, Dropdown, Menu, Button, Card, Row } from "antd";
 import { Tabs } from "antd";
 import React from "react";
 import NewPackagePage from './components/NewPackagePage';
-import background01 from './image/background01.jpg';
+import background02 from './image/background02.jpg';
  
 
 
@@ -17,25 +17,20 @@ class OrderMainPage extends React.Component{
     }
 
     return (
-      <Layout style={{ height: "100vh" }}>
-      <Header style={{ display: "flex", justifyContent: "space-between", color:"black"}}>
-        <div style={{ fontSize: 16, fontWeight: 600, color: "purple" }}>
-          Robot Delivery
-        </div>
-      </Header>
-      <Content
-      style={{backgroundImage:`url(${background01})`, height: "calc(100% - 64px)", margin: 10, overflow: "auto"}}
+      // <Layout style={{ height: "100vh" }}>
+       <Card bordered={false}
+       style={{backgroundImage:`url(${background02})`, height:"calc(100%)", overflow: "auto"}}
       >
-         <Tabs defaultActiveKey="1" onChange={callback}>
-            <TabPane tab="Order" key="1">
+         <Tabs  tabBarStyle={{color:"white", fontWeight:500}} defaultActiveKey="1" onChange={callback}>
+            <TabPane  tab="Order" key="1">
                <NewPackagePage/>;
             </TabPane>
-            <TabPane tab="Status" key="2">
+            <TabPane  tab="Status" key="2">
                Content of Tab Pane 2
             </TabPane>
           </Tabs>
-      </Content>
-    </Layout>
+       </Card>
+    // </Layout>
 
     );
   }

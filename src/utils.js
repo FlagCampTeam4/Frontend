@@ -52,6 +52,7 @@ export const uploadPackage = (query) => {
     );
  
     return fetch(uploadPackageUrl, {
+      method: "GET",
       headers: {
         Authorization: `Bearer ${authToken}`,
       },

@@ -4,6 +4,7 @@ import { UserOutlined } from "@ant-design/icons";
 import LoginPage from "./components/LoginPage";
 import OrderMainPage from './OrderMainPage';
 import React from "react";
+import background01 from './image/background01.jpg';
  
 const { Header, Content } = Layout;
  
@@ -63,7 +64,7 @@ class App extends React.Component {
     return (
       <Layout style={{ height: "100vh" }}>
         <Header style={{ display: "flex", justifyContent: "space-between" }}>
-          <div style={{ fontSize: 16, fontWeight: 600, color: "white" }}>
+          <div className="TitleText" style={{ fontSize: 16, fontWeight: 600 }}>
             SF Delivery
           </div>
           {this.state.authed && (
@@ -75,7 +76,7 @@ class App extends React.Component {
           )}
         </Header>
         <Content
-          style={{ height: "calc(100% - 64px)", margin: 20, overflow: "auto" }}
+          style={{ backgroundImage:`url(${background01})`, height: "calc(100% - 64px)", overflow: "auto" }}
         >
           {this.renderContent()}
         </Content>
