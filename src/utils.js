@@ -37,20 +37,23 @@ export const register = (credential, asHost) => {
  
 
 export const uploadPackage = (query) => {
+    //console.log(query);
     const authToken = localStorage.getItem("authToken");
     const uploadPackageUrl = new URL(`${domain}/search/`);
+    uploadPackageUrl.searchParams.append("receiver_name", query.name);
     uploadPackageUrl.searchParams.append("weight", query.weight);
     uploadPackageUrl.searchParams.append("height", query.height);
     uploadPackageUrl.searchParams.append("length", query.length);
     uploadPackageUrl.searchParams.append("width", query.width);
-    uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
-    uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
+    uploadPackageUrl.searchParams.append("pick_up_address", query.pickupaddress);
+    uploadPackageUrl.searchParams.append("delivery_address", query.deliveryaddress);
 
     uploadPackageUrl.searchParams.append(
-        "pickuptime",
-        query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
+        "pick_up_time",
+        query.pick_up_time.format("YYYY-MM-DDThh:mm:ss")
     );
- 
+    console.log(uploadPackageUrl);
+
     return fetch(uploadPackageUrl, {
       method: "GET",
       headers: {
