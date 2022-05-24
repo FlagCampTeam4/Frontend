@@ -125,7 +125,7 @@ class NewPackagePage extends React.Component {
   
             <p className="FormText">RECIPIENT</p>
             {/* <Divider /> */}
-            <Form.Item  name={['recipient', 'name']} label="Name" rules={[{ required: true }]}>
+            <Form.Item  name='recipientname' label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
             {/* <Form.Item name={['recipient', 'phone']} label="Phone" >

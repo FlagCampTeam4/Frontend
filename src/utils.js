@@ -37,10 +37,11 @@ export const register = (credential, asHost) => {
  
 
 export const uploadPackage = (query) => {
-    //console.log(query);
+    console.log(query);
     const authToken = localStorage.getItem("authToken");
     const uploadPackageUrl = new URL(`${domain}/search/`);
-    uploadPackageUrl.searchParams.append("receiver_name", query.name);
+    //console.log(query);
+    uploadPackageUrl.searchParams.append("receiver_name", query.recipientname);
     uploadPackageUrl.searchParams.append("weight", query.weight);
     uploadPackageUrl.searchParams.append("height", query.height);
     uploadPackageUrl.searchParams.append("length", query.length);
@@ -50,9 +51,9 @@ export const uploadPackage = (query) => {
 
     uploadPackageUrl.searchParams.append(
         "pick_up_time",
-        query.pick_up_time.format("YYYY-MM-DDThh:mm:ss")
+        query.pickuptime.format("YYYY-MM-DDThh:mm:ss")
     );
-    console.log(uploadPackageUrl);
+    
 
     return fetch(uploadPackageUrl, {
       method: "GET",
