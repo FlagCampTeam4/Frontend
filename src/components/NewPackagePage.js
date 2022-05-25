@@ -23,14 +23,11 @@ class NewPackagePage extends React.Component {
     state = {
       authed: false,
       loading: false,
-      //data:[],
     };
 
     handleSubmit = async (query) => {
       // const formData = new FormData();
       // const formInstance = this.formRef.current;
-
-      // console.log(values.name);
 
       // formData.append("name", values.name);
       // formData.append("weight", values.weight);
@@ -52,12 +49,7 @@ class NewPackagePage extends React.Component {
       });
    
       try {
-        //console.log(query);
         await uploadPackage(query);
-        // this.setState({
-        //   data: resp,
-        // });
-        console.log(uploadPackageUrl);
         message.success("Submit Successfully");
       } catch (error) {
         message.error(error.message);
