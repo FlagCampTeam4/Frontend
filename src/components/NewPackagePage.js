@@ -25,30 +25,31 @@ class NewPackagePage extends React.Component {
       loading: false,
     };
 
-    handleSubmit = async (values) => {
-      const formData = new FormData();
-      const formInstance = this.formRef.current;
+    handleSubmit = async (query) => {
+      // const formData = new FormData();
+      // const formInstance = this.formRef.current;
 
-      formData.append("weight", values.weight);
-      formData.append("height", values.height);
-      formData.append("length", values.length);
-      formData.append("width", values.width);
-      formData.append("pickup_address", values.pickupaddress);
-      formData.append("delivery_address", values.deliveryaddress);
-      formData.append("pick_up_time", values.pickuptime);
+      // formData.append("name", values.name);
+      // formData.append("weight", values.weight);
+      // formData.append("height", values.height);
+      // formData.append("length", values.length);
+      // formData.append("width", values.width);
+      // formData.append("pick_up_address", values.pickupaddress);
+      // formData.append("delivery_address", values.deliveryaddress);
+      // formData.append("pick_up_time", values.pickuptime);
    
-      try {
-        await formInstance.validateFields();
-      } catch (error) {
-        return;
-      }
+      // try {
+      //   await formInstance.validateFields();
+      // } catch (error) {
+      //   return;
+      // }
    
       this.setState({
         loading: true,
       });
    
       try {
-        await uploadPackage(formData);
+        await uploadPackage(query);
         message.success("Submit Successfully");
       } catch (error) {
         message.error(error.message);
@@ -77,15 +78,17 @@ class NewPackagePage extends React.Component {
         },
       };
       
-      const onFinish = () => {
-        console.log("submitted");
-      };
-      
       const { Option } = Select;
   
       function onChange(date, dateString) {
         console.log(date, dateString);
       }
+
+      // const onOk = (value) => {
+      //   console.log("onOk: ", moment().format());
+      //   console.log("onOk: ", typeof value);
+      //   console.log("onOk: ", value.format("YYYY-MM-DD HH:mm:ss"));
+      // };
   
       const prefixSelector = (
         <Form.Item name='prefix' noStyle>
@@ -98,15 +101,15 @@ class NewPackagePage extends React.Component {
   
       return (
         <Card className="OrderCard">
-          <Form {...layout} className="OrderInfo" ref={this.formRef} onFinish={this.onFinish} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
+          <Form {...layout} className="OrderInfo" ref={this.formRef} onFinish={this.handleSubmit} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
             <p className="FormText">SENDER</p>
             {/* <Divider /> */}
-            <Form.Item name={['sender', 'name']} label="Name" rules={[{ required: true }]}>
+            {/* <Form.Item name={['sender', 'name']} label="Name" rules={[{ required: true }]}>
                 <Input/>    
             </Form.Item>
             <Form.Item name={['sender', 'phone']}  label="Phone" rules={[{ required: true }]}>
                   <Input addonBefore={prefixSelector} style={{ width: '100%' }}/>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item name='pickupaddress' label="Address" rules={[{ required: true }]}>
                 <Input/>
                
@@ -114,10 +117,10 @@ class NewPackagePage extends React.Component {
   
             <p className="FormText">RECIPIENT</p>
             {/* <Divider /> */}
-            <Form.Item  name={['recipient', 'name']} label="Name" rules={[{ required: true }]}>
+            <Form.Item  name='recipientname' label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
-            <Form.Item name={['recipient', 'phone']} label="Phone" >
+            {/* <Form.Item name={['recipient', 'phone']} label="Phone" >
               <Input.Group compact >
                 <Form.Item noStyle name={['recipient','prefix']}>
                     <Select style={{ width: 70 }}>
@@ -129,7 +132,7 @@ class NewPackagePage extends React.Component {
                     <Input style={{ width: '85%' }}/>
                   </Form.Item>
               </Input.Group>
-            </Form.Item>
+            </Form.Item> */}
             <Form.Item name='deliveryaddress' label="Address" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
@@ -149,11 +152,12 @@ class NewPackagePage extends React.Component {
               <InputNumber addonAfter="in" />
             </Form.Item>
             <Form.Item name='pickuptime' label="Shipping Date" rules={[{ required: true }]}>
-              <DatePicker onChange={onChange} />
+              {/* <DatePicker onChange={onChange} /> */}
+              <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime={true}/>
             </Form.Item>
   
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 11 }}>
-              <Button type="primary" onClick={this.handleSubmit} disabled={this.state.loading} >
+              <Button type="primary" /*onClick={this.handleSubmit}*/ htmlType="submit" disabled={this.state.loading} >
                 Submit
               </Button>
             </Form.Item>
