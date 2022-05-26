@@ -38,20 +38,21 @@ export const register = (credential, asHost) => {
 
 export const uploadPackage = (query) => {
     const authToken = localStorage.getItem("authToken");
-    const uploadPackageUrl = new URL(`${domain}/search/`);
-    uploadPackageUrl.searchParams.append("weight", query.weight);
-    uploadPackageUrl.searchParams.append("height", query.height);
-    uploadPackageUrl.searchParams.append("length", query.length);
-    uploadPackageUrl.searchParams.append("width", query.width);
-    uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
-    uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
+    const uploadURL = `${domain}/search/?receiver_name=${query.recipientname}&weight=${query.weight}&height=${query.height}&length=${query.length}&width=${query.width}&pick_up_address=${query.pickupaddress}&delivery_address=${query.deliveryaddress}&pick_up_time=${query.pickuptime.format("YYYY-MM-DDThh:mm:ss")}`;
+    // const uploadPackageUrl = new URL(`${domain}/search/`);
+    // uploadPackageUrl.searchParams.append("weight", query.weight);
+    // uploadPackageUrl.searchParams.append("height", query.height);
+    // uploadPackageUrl.searchParams.append("length", query.length);
+    // uploadPackageUrl.searchParams.append("width", query.width);
+    // uploadPackageUrl.searchParams.append("pickupaddress", query.pickup_address);
+    // uploadPackageUrl.searchParams.append("deliveryaddress", query.delivery_address);
 
-    uploadPackageUrl.searchParams.append(
-        "pickuptime",
-        query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
-    );
+    // uploadPackageUrl.searchParams.append(
+    //     "pickuptime",
+    //     query.pick_up_time.format("YYYY-MM-DD hh:mm:ss")
+    // );
  
-    return fetch(uploadPackageUrl, {
+    return fetch(uploadURL, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${authToken}`,
@@ -65,14 +66,17 @@ export const uploadPackage = (query) => {
     });
 };
 
-export const succeed = () => {
+export const succeed = (data) => {
   const authToken = localStorage.getItem("authToken");
   const succeedUrl = `${domain}/order`;
  
   return fetch(succeedUrl, {
+    method: "POST",
     headers: {
       Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
     },
+    body: JSON.stringify(data),
   }).then((response) => {
     if (response.status !== 200) {
       throw Error("Fail to get the package info");

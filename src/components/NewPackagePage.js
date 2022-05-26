@@ -20,43 +20,46 @@ import {uploadPackage, succeed} from "../utils";
  
  
 class NewPackagePage extends React.Component {
-  formRef = React.createRef();
+  // formRef = React.createRef();
     state = {
-      authed: false,
+      // authed: false,
       loading: false,
     };
 
-    handleSubmit = async (values) => {
-      const formData = new FormData();
-      const formInstance = this.formRef.current;
+    handleSubmit = async (query) => {
+      // const formData = new FormData();
+      // const formInstance = this.formRef.current;
 
-      formData.append("weight", values.weight);
-      formData.append("height", values.height);
-      formData.append("length", values.length);
-      formData.append("width", values.width);
-      formData.append("pickup_address", values.pickupaddress);
-      formData.append("delivery_address", values.deliveryaddress);
-      formData.append("pick_up_time", values.pickuptime);
+      // formData.append("weight", values.weight);
+      // formData.append("height", values.height);
+      // formData.append("length", values.length);
+      // formData.append("width", values.width);
+      // formData.append("pickup_address", values.pickupaddress);
+      // formData.append("delivery_address", values.deliveryaddress);
+      // formData.append("pick_up_time", values.pickuptime);
    
-      try {
-        await formInstance.validateFields();
-      } catch (error) {
-        return;
-      }
+      // try {
+      //   await formInstance.validateFields();
+      // } catch (error) {
+      //   return;
+      // }
    
       this.setState({
         loading: true,
       });
    
       try {
-        const res = await uploadPackage(formInstance.getFieldsValue(true));
+        const res = await uploadPackage(query);
         message.success("Submit Successfully");
+        //const name = JSON.stringify(res.recipientname);
         Modal.success({
-          title: 'Our Recommendation',
-          content: res,
+          title: 'Your Package Is Scheduled!',
+          content: JSON.stringify(res)
         });
         //calling back succeed request to backend
-        succeed();
+        if(res){
+          await succeed(res);
+        }
       } catch (error) {
         message.error(error.message);
       } finally {
@@ -65,6 +68,10 @@ class NewPackagePage extends React.Component {
         });
       }
     };
+
+    // turnToString = (data) => {
+    //   'Receiver name: ', JSON.stringify(data.receiver);
+    // };
  
  
     render() {
@@ -84,15 +91,15 @@ class NewPackagePage extends React.Component {
         },
       };
       
-      const onFinish = () => {
-        console.log("submitted");
-      };
+      // const onFinish = () => {
+      //   console.log("submitted");
+      // };
       
-      const { Option } = Select;
+      // const { Option } = Select;
   
-      function onChange(date, dateString) {
-        console.log(date, dateString);
-      }
+      // function onChange(date, dateString) {
+      //   console.log(date, dateString);
+      // }
   
       const prefixSelector = (
         <Form.Item name='prefix' noStyle>
@@ -105,7 +112,7 @@ class NewPackagePage extends React.Component {
   
       return (
         <Card className="OrderCard">
-          <Form {...layout} className="OrderInfo" ref={this.formRef} onFinish={this.onFinish} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
+          <Form {...layout} className="OrderInfo" onFinish={this.handleSubmit} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
             <p className="FormText">SENDER</p>
             {/* <Divider /> */}
             <Form.Item name={['sender', 'name']} label="Name" rules={[{ required: true }]}>
@@ -156,11 +163,11 @@ class NewPackagePage extends React.Component {
               <InputNumber addonAfter="in" />
             </Form.Item>
             <Form.Item name='pickuptime' label="Shipping Date" rules={[{ required: true }]}>
-              <DatePicker onChange={onChange} />
+              <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime={true}/>
             </Form.Item>
   
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 11 }}>
-              <Button type="primary" onClick={this.handleSubmit} disabled={this.state.loading} >
+              <Button type="primary" htmlType="submit" disabled={this.state.loading} >
                 Submit
               </Button>
             </Form.Item>
