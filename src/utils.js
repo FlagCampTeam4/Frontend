@@ -38,8 +38,6 @@ export const register = (credential, asHost) => {
 
 export const uploadPackage = (query) => {
     const authToken = localStorage.getItem("authToken");
-    // const uploadPackageUrl = new URL(`${domain}/search/`);
-    // uploadPackageUrl.searchParams.append("receiver_name", query.recipientname);
     // uploadPackageUrl.searchParams.append("weight", query.weight);
     // uploadPackageUrl.searchParams.append("height", query.height);
     // uploadPackageUrl.searchParams.append("length", query.length);
@@ -66,3 +64,22 @@ export const uploadPackage = (query) => {
       return response.json();
     });
 };
+
+export const succeed = (data) => {
+  const authToken = localStorage.getItem("authToken");
+  const succeedUrl = `${domain}/order`;
+ 
+  return fetch(succeedUrl, {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get the package info");
+    }
+  });
+};
+

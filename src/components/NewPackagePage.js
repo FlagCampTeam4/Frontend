@@ -14,43 +14,37 @@ import {
   DatePicker,
   message,
   Card,
+  Modal,
 } from 'antd';
-import {uploadPackage} from "../utils";
+import {uploadPackage, succeed} from "../utils";
  
  
 class NewPackagePage extends React.Component {
-  formRef = React.createRef();
+  // formRef = React.createRef();
     state = {
-      authed: false,
+      // authed: false,
       loading: false,
     };
 
     handleSubmit = async (query) => {
-      // const formData = new FormData();
-      // const formInstance = this.formRef.current;
-
-      // formData.append("name", values.name);
-      // formData.append("weight", values.weight);
-      // formData.append("height", values.height);
-      // formData.append("length", values.length);
-      // formData.append("width", values.width);
-      // formData.append("pick_up_address", values.pickupaddress);
-      // formData.append("delivery_address", values.deliveryaddress);
-      // formData.append("pick_up_time", values.pickuptime);
-   
-      // try {
-      //   await formInstance.validateFields();
-      // } catch (error) {
-      //   return;
-      // }
-   
       this.setState({
         loading: true,
       });
    
       try {
-        await uploadPackage(query);
+
+        const res = await uploadPackage(query);
         message.success("Submit Successfully");
+        //const name = JSON.stringify(res.receiver_name);
+        Modal.success({
+          title: 'Your Package Is Scheduled!',
+          content: JSON.stringify(res, null, 4),
+        });
+        //calling back succeed request to backend
+        if(res){
+          await succeed(res);
+          //reset();
+        }
       } catch (error) {
         message.error(error.message);
       } finally {
@@ -59,6 +53,10 @@ class NewPackagePage extends React.Component {
         });
       }
     };
+
+    //  printOut = (data) => {
+    //    'Receiver name: ', data.receiver_name;
+    //  };
  
  
     render() {
@@ -84,11 +82,6 @@ class NewPackagePage extends React.Component {
         console.log(date, dateString);
       }
 
-      // const onOk = (value) => {
-      //   console.log("onOk: ", moment().format());
-      //   console.log("onOk: ", typeof value);
-      //   console.log("onOk: ", value.format("YYYY-MM-DD HH:mm:ss"));
-      // };
   
       const prefixSelector = (
         <Form.Item name='prefix' noStyle>
@@ -98,10 +91,12 @@ class NewPackagePage extends React.Component {
           </Select>
         </Form.Item>
       );
-  
+
       return (
         <Card className="OrderCard">
-          <Form {...layout} className="OrderInfo" ref={this.formRef} onFinish={this.handleSubmit} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
+
+          <Form {...layout} className="OrderInfo" onFinish={this.handleSubmit} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
+
             <p className="FormText">SENDER</p>
             {/* <Divider /> */}
             {/* <Form.Item name={['sender', 'name']} label="Name" rules={[{ required: true }]}>
@@ -117,7 +112,9 @@ class NewPackagePage extends React.Component {
   
             <p className="FormText">RECIPIENT</p>
             {/* <Divider /> */}
-            <Form.Item  name='recipientname' label="Name" rules={[{ required: true }]}>
+
+            <Form.Item  name="recipientname" label="Name" rules={[{ required: true }]}>
+
               <Input />
             </Form.Item>
             {/* <Form.Item name={['recipient', 'phone']} label="Phone" >
@@ -152,12 +149,13 @@ class NewPackagePage extends React.Component {
               <InputNumber addonAfter="in" />
             </Form.Item>
             <Form.Item name='pickuptime' label="Shipping Date" rules={[{ required: true }]}>
-              {/* <DatePicker onChange={onChange} /> */}
+
               <DatePicker format="YYYY-MM-DD HH:mm:ss" showTime={true}/>
             </Form.Item>
   
             <Form.Item wrapperCol={{ ...layout.wrapperCol, offset: 11 }}>
-              <Button type="primary" /*onClick={this.handleSubmit}*/ htmlType="submit" disabled={this.state.loading} >
+
+              <Button type="primary" htmlType="submit" disabled={this.state.loading} >
                 Submit
               </Button>
             </Form.Item>
