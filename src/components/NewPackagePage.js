@@ -51,14 +51,15 @@ class NewPackagePage extends React.Component {
       try {
         const res = await uploadPackage(query);
         message.success("Submit Successfully");
-        //const name = JSON.stringify(res.recipientname);
+        //const name = JSON.stringify(res.receiver_name);
         Modal.success({
           title: 'Your Package Is Scheduled!',
-          content: JSON.stringify(res)
+          content: JSON.stringify(res, null, 4),
         });
         //calling back succeed request to backend
         if(res){
           await succeed(res);
+          //reset();
         }
       } catch (error) {
         message.error(error.message);
@@ -69,9 +70,9 @@ class NewPackagePage extends React.Component {
       }
     };
 
-    // turnToString = (data) => {
-    //   'Receiver name: ', JSON.stringify(data.receiver);
-    // };
+    //  printOut = (data) => {
+    //    'Receiver name: ', data.receiver_name;
+    //  };
  
  
     render() {
@@ -109,7 +110,7 @@ class NewPackagePage extends React.Component {
           </Select>
         </Form.Item>
       );
-  
+
       return (
         <Card className="OrderCard">
           <Form {...layout} className="OrderInfo" onFinish={this.handleSubmit} validateMessages={validateMessages} labelCol={{ span: 9 }} wrapperCol={{ span: 8 }} >
@@ -128,7 +129,7 @@ class NewPackagePage extends React.Component {
   
             <p className="FormText">RECIPIENT</p>
             {/* <Divider /> */}
-            <Form.Item  name={['recipient', 'name']} label="Name" rules={[{ required: true }]}>
+            <Form.Item  name="recipientname" label="Name" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
             <Form.Item name={['recipient', 'phone']} label="Phone" >
