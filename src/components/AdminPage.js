@@ -36,7 +36,7 @@ export class OrderInfoButton extends React.Component {
   
   render() {
     const { order } = this.props;
-    const { orderNumber, address, weight} = order;
+    const { delivery_time, pick_up_time} = order;
     const { modalVisible } = this.state;
     return (
       <>
@@ -57,12 +57,10 @@ export class OrderInfoButton extends React.Component {
             onCancel={this.handleCancel}
           >
             <Space direction="vertical">
-              <Text strong={true}>Order Number</Text>
-              <Text type="secondary">{orderNumber}</Text>
-              <Text strong={true}>Address</Text>
-              <Text type="secondary">{address}</Text>
-              <Text strong={true}>Weight</Text>
-              <Text type="secondary">{weight}</Text>
+              <Text strong={true}>Scheduled pick up time</Text>
+              <Text type="secondary">{pick_up_time}</Text>
+              <Text strong={true}>Estimate deliverd time</Text>
+              <Text type="secondary">{delivery_time}</Text>
             </Space>
           </Modal>
         )}
@@ -239,27 +237,33 @@ class Orders extends React.Component {
         grid={{
           gutter: 16,
           xs: 1,
-          sm: 3,
-          md: 3,
-          lg: 3,
-          xl: 4,
-          xxl: 4,
+          sm: 1,
+          md: 1,
+          lg: 1,
+          xl: 1,
+          xxl: 1,
         }}
         dataSource={this.state.data}
         renderItem={(item) => (
           <List.Item>
             <Card
               key={item.id}
+              // bordered={false}
               title={
                 <div style={{ display: "flex", alignItems: "center" }}>
-                  <Text ellipsis={true} style={{ maxWidth: 150 }}>
-                    {item.name}
+                  <Text ellipsis={true} style={{ maxWidth: 300 }}>
+                    Delviery address: {item.delivery_address}
                   </Text>
                   <OrderInfoButton order={item} />
                 </div>
               }
-              actions={<ActionButton order={item} />}
+              // actions={<ActionButton order={item} />}
             >
+              <p><b>Receiver Name:  {item.receiver_name}</b></p>
+              <p>Package Weight:  {item.weight}</p>
+              <p>Package Length:  {item.length}</p>
+              <p>Package Width:  {item.width}</p>
+              <p>Package Height:  {item.height}</p>
             </Card>
           </List.Item>
         )}
