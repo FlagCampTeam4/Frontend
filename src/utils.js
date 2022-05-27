@@ -34,7 +34,22 @@ export const register = (credential, asHost) => {
   });
 };
 
+export const getReservations = () => {
+  const authToken = localStorage.getItem("authToken");
+  const listReservationsUrl = `${domain}/history/guest`;
  
+  return fetch(listReservationsUrl, {
+    headers: {
+      Authorization: `Bearer ${authToken}`,
+    },
+  }).then((response) => {
+    if (response.status !== 200) {
+      throw Error("Fail to get order list");
+    }
+ 
+    return response.json();
+  });
+};
 
 export const uploadPackage = (query) => {
     const authToken = localStorage.getItem("authToken");
