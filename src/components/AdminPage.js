@@ -1,4 +1,5 @@
 import {
+    message,
     Tabs,
     List,
     Card,
@@ -9,6 +10,7 @@ import {
     Space,
     Modal,
   } from "antd";
+// import { DownOutlined } from '@ant-design/icons';
 import Text from "antd/lib/typography/Text";
 import InfoCircleOutlined from '@ant-design/icons/InfoCircleOutlined';
 import {adminStatus, adminOps } from "../utils";
@@ -36,7 +38,7 @@ export class OrderInfoButton extends React.Component {
   
   render() {
     const { order } = this.props;
-    const { delivery_time, pick_up_time} = order;
+    const { orderID, delivery_time, pick_up_time} = order;
     const { modalVisible } = this.state;
     return (
       <>
@@ -57,6 +59,8 @@ export class OrderInfoButton extends React.Component {
             onCancel={this.handleCancel}
           >
             <Space direction="vertical">
+              <Text strong={true}>Order ID</Text>
+              <Text type="secondary">{orderID}</Text>
               <Text strong={true}>Scheduled pick up time</Text>
               <Text type="secondary">{pick_up_time}</Text>
               <Text strong={true}>Estimate deliverd time</Text>
@@ -76,12 +80,15 @@ class PickedUpButton extends React.Component {
   };
 
   handleOrderPickUp = async () => {
-    this.setState = {
+    const { order } = this.props;
+    const { orderID} = order;
+    this.setState({
       loading: true,
-    };
+    });
 
     try{
-      await adminOps(this.props.id, 1);
+      // console.log(order.orderID);
+      await adminOps(orderID, 1);
       message.success("Successfully update operation pick up!");
     }catch (error) {
       message.error(error.message);
@@ -128,16 +135,18 @@ class PickedUpButton extends React.Component {
 
 class DeliveredButton extends React.Component {
   state = {
-      loading: false,
+    loading: false,
   };
 
   handleOrderDelivered = async () => {
-    this.setState = {
+    const { order } = this.props;
+    const { orderID} = order;
+    this.setState({
       loading: true,
-    };
+    });
 
     try{
-      await adminOps(this.props.id, 2);
+      await adminOps(orderID, 2);
       message.success("Successfully update operation delivered!");
     }catch (error) {
       message.error(error.message);
@@ -155,7 +164,8 @@ class DeliveredButton extends React.Component {
         onClick={this.handleOrderDelivered}
         danger={true}
         shape="round"
-        type="secondary"
+        // type="secondary"
+        type="primary"
       >
         Order Delivered
       </Button>
@@ -164,42 +174,46 @@ class DeliveredButton extends React.Component {
 }
 
 
-class ActionButton extends React.Component {
-  state = {
-      loading: false,
-  };
+// class ActionButton extends React.Component {
+//   state = {
+//       loading: false,
+//   };
     
-  render() {
-    const {onMenuClick} = (e) => {
-        console.log('click', e);
-      };
+//   render() {
+//     const {onMenuClick} = (e) => {
+//         console.log('click', e);
+//       };
       
-      const menu = (
-        <Menu
-          onClick={onMenuClick}
-          items={[
-            // {
-            //   key: '1',
-            //   label: 'Order Shipped',
-            // },
-            {
-              key: '1',
-              label: 'Order Picked Up',
-            },
-            {
-              key: '2',
-              label: 'Order Delivered',
-            },
-          ]}
-        />
-      );
-    return (
-        <Dropdown.Button overlay={menu} >
-        Actions
-      </Dropdown.Button>
-    );
-  }
-}
+//     const menu = (
+//       <Menu
+//         onClick={onMenuClick}
+//         items={[
+//           // {
+//           //   key: '1',
+//           //   label: 'Order Shipped',
+//           // },
+//           {
+//             key: '1',
+//             label: ('Order Picked Up'),
+//           },
+//           {
+//             key: '2',
+//             label: (<button onClick={DeliveredButton}>Order Delivered</button>),
+//           },
+//         ]}
+//       />
+//     );
+    
+//     return (
+//         <Dropdown.Button overlay={menu} >
+//           <a onClick={e => e.preventDefault()}>
+//             Actions
+//             {/* <DownOutlined /> */}
+//           </a>
+//         </Dropdown.Button>
+//     );
+//   }
+// }
 
 class Orders extends React.Component {
   state = {
@@ -257,7 +271,9 @@ class Orders extends React.Component {
                   <OrderInfoButton order={item} />
                 </div>
               }
-              // actions={<ActionButton order={item} />}
+              // extra={<PickedUpButton order={item}/> }
+              actions={[<PickedUpButton order={item}/>, <DeliveredButton order={item} />]}
+              // actions={[<ActionButton order={item} />]}
             >
               <p><b>Receiver Name:  {item.receiver_name}</b></p>
               <p>Package Weight:  {item.weight}</p>

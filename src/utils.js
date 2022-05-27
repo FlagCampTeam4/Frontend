@@ -104,9 +104,9 @@ export const adminStatus = () => {
 //admin side operations
 export const adminOps = (id, status) => {
     const authToken = localStorage.getItem("authToken");
-    const adminOpsUrl = new URL(`${domain}/orders/update/`);
-    adminOpsUrl.searchParams.append("order_ID", id);
-    adminOpsUrl.searchParams.append("order_status", status);
+    const adminOpsUrl = `${domain}/update/${id}/${status}`;
+    // adminOpsUrl.searchParams.append("order_ID", id);
+    // adminOpsUrl.searchParams.append("order_status", status);
  
     return fetch(adminOpsUrl, {
         method: "PUT",
@@ -117,7 +117,5 @@ export const adminOps = (id, status) => {
             if (response.status !== 200) {
               throw Error("Fail to operate package status");
             }
-         
-        return response.json();
     });
 }
