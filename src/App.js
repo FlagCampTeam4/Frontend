@@ -1,4 +1,5 @@
-
+import './App.css';
+import AdminPage from './components/AdminPage';
 import { Layout, Dropdown, Menu, Button } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import LoginPage from "./components/LoginPage";
@@ -46,7 +47,7 @@ class App extends React.Component {
     }
 
     if (this.state.asHost) {
-      return <div>host home page</div>;
+      return <AdminPage />;
     }
  
     return <OrderMainPage />;
