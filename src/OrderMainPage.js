@@ -4,7 +4,7 @@ import React from "react";
 import MyOrders from "./components/MyOrders";
 import NewPackagePage from './components/NewPackagePage';
 import background02 from './image/background02.jpg';
-import MyOrders from "./components/MyOrders";
+// import MyOrders from "./components/MyOrders";
  
 
 
