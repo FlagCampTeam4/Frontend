@@ -33,11 +33,11 @@ export const register = (credential, asHost) => {
   });
 };
 
-export const getReservations = () => {
+export const getOrders = () => {
   const authToken = localStorage.getItem("authToken");
-  const listReservationsUrl = `${domain}/history/guest`;
+  const listOrdersUrl = `${domain}/history/guest`;
  
-  return fetch(listReservationsUrl, {
+  return fetch(listOrdersUrl, {
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
