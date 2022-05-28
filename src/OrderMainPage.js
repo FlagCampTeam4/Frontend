@@ -4,6 +4,7 @@ import React from "react";
 import MyOrders from "./components/MyOrders";
 import NewPackagePage from './components/NewPackagePage';
 import background02 from './image/background02.jpg';
+import MyOrders from "./components/MyOrders";
  
 
 
@@ -14,7 +15,9 @@ class OrderMainPage extends React.Component{
     const { TabPane } = Tabs;
 
     function callback(key) {
+
       console.log('tab: ',key);
+
     }
 
     return (
