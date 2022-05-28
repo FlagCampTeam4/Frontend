@@ -64,12 +64,11 @@ export const uploadPackage = (query) => {
     });
 };
 
-export const getOrders = (id, state) => {
+export const getOrders = () => {
   const authToken = localStorage.getItem("authToken");
-  const ordersUrl = `${domain}/orders/update/${id}/${state}`;
+  const ordersUrl = `${domain}/history/guest`;
  
   return fetch(ordersUrl, {
-    method: "PUT",
     headers: {
       Authorization: `Bearer ${authToken}`,
     },
@@ -77,6 +76,8 @@ export const getOrders = (id, state) => {
     if (response.status !== 200) {
       throw Error("Fail to get the package info");
     }
+
+    return response.json();
   });
 };
 
