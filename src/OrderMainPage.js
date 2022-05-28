@@ -3,6 +3,7 @@ import { Tabs } from "antd";
 import React from "react";
 import NewPackagePage from './components/NewPackagePage';
 import background02 from './image/background02.jpg';
+import MyOrders from "./components/MyOrders";
  
 
 
@@ -13,7 +14,7 @@ class OrderMainPage extends React.Component{
     const { TabPane } = Tabs;
 
     function callback(key) {
-      console.log(key);
+      console.log('tab:', key);
     }
 
     return (
@@ -26,7 +27,7 @@ class OrderMainPage extends React.Component{
                <NewPackagePage/>;
             </TabPane>
             <TabPane  tab="Status" key="2">
-               Content of Tab Pane 2
+               <MyOrders />;
             </TabPane>
           </Tabs>
        </Card>
