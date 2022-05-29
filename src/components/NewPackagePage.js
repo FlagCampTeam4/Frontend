@@ -32,19 +32,23 @@ class NewPackagePage extends React.Component {
       });
    
       try {
-
+        // toJSON(){return this.Name + "\t" + this.Price}
         const res = await uploadPackage(query);
         message.success("Submit Successfully");
         //const name = JSON.stringify(res.receiver_name);
-        Modal.success({
-          title: 'Your Package Is Scheduled!',
-          content: JSON.stringify(res, null, 4),
+        // console.log(JSON.stringify({ Name: res.receiver_name, DeliveryTime: res.delivery_time, Price: res.total_price}, null, '\t'));
+        Modal.confirm({
+          title: 'Do you want to schedule it?',
+          content: JSON.stringify({ Name: res.receiver_name, DeliveryTime: res.delivery_time, Price: res.total_price, toJSON(){return "Receiver Name: " + this.Name + " Delivery Time: " + this.DeliveryTime + " " + " Price: $" + this.Price}}, null, '\t'),
+          onOk: () => {
+            succeed(res);
+          },
         });
         //calling back succeed request to backend
-        if(res){
-          await succeed(res);
-          //reset();
-        }
+        // if(res){
+        //   await succeed(res);
+        //   //reset();
+        // }
       } catch (error) {
         message.error(error.message);
       } finally {
@@ -105,7 +109,7 @@ class NewPackagePage extends React.Component {
             <Form.Item name={['sender', 'phone']}  label="Phone" rules={[{ required: true }]}>
                   <Input addonBefore={prefixSelector} style={{ width: '100%' }}/>
             </Form.Item> */}
-            <Form.Item name='pickupaddress' label="Address" rules={[{ required: true }]}>
+            <Form.Item name='pickupaddress' label="Pick Up Address" rules={[{ required: true }]}>
                 <Input/>
                
             </Form.Item>
@@ -113,7 +117,7 @@ class NewPackagePage extends React.Component {
             <p className="FormText">RECIPIENT</p>
             {/* <Divider /> */}
 
-            <Form.Item  name="recipientname" label="Name" rules={[{ required: true }]}>
+            <Form.Item  name="recipientname" label="Receiver Name" rules={[{ required: true }]}>
 
               <Input />
             </Form.Item>

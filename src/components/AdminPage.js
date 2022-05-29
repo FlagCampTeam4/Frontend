@@ -266,7 +266,7 @@ class Orders extends React.Component {
               title={
                 <div style={{ display: "flex", alignItems: "center" }}>
                   <Text ellipsis={true} style={{ maxWidth: 300 }}>
-                    Delviery address: {item.delivery_address}
+                    Delivery address: {item.delivery_address}
                   </Text>
                   <OrderInfoButton order={item} />
                 </div>
