@@ -39,6 +39,7 @@ class NewPackagePage extends React.Component {
         Modal.success({
           title: 'Your Package Is Scheduled!',
           content: JSON.stringify(res, null, 4),
+          okText: "confirm",
         });
         //calling back succeed request to backend
         if(res){
