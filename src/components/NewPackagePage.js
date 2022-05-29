@@ -40,6 +40,7 @@ class NewPackagePage extends React.Component {
         Modal.confirm({
           title: 'Do you want to schedule it?',
           content: JSON.stringify({ Name: res.receiver_name, DeliveryTime: res.delivery_time, Price: res.total_price, toJSON(){return "Receiver Name: " + this.Name + " Delivery Time: " + this.DeliveryTime + " " + " Price: $" + this.Price}}, null, '\t'),
+          okText: "confirm",
           onOk: () => {
             succeed(res);
           },
@@ -134,7 +135,7 @@ class NewPackagePage extends React.Component {
                   </Form.Item>
               </Input.Group>
             </Form.Item> */}
-            <Form.Item name='deliveryaddress' label="Address" rules={[{ required: true }]}>
+            <Form.Item name='deliveryaddress' label="Shipping Address" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
   
