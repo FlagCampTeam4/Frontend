@@ -135,7 +135,7 @@ class NewPackagePage extends React.Component {
                   </Form.Item>
               </Input.Group>
             </Form.Item> */}
-            <Form.Item name='deliveryaddress' label="Address" rules={[{ required: true }]}>
+            <Form.Item name='deliveryaddress' label="Shipping Address" rules={[{ required: true }]}>
               <Input />
             </Form.Item>
   
