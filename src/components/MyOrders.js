@@ -1,5 +1,5 @@
 import React from "react";
-import { message, Tabs, List, Typography, Button, Modal } from "antd";
+import { message, Tabs, List, Typography, Button, Modal, Card } from "antd";
 import { getOrders} from "../utils";
  
 const { TabPane } = Tabs;
@@ -84,6 +84,10 @@ class MyOrders extends React.Component {
   componentDidMount() {
     this.loadData();
   }
+  
+  // componentDidUpdate(){
+  //   this.loadData();
+  // }
  
   loadData = async () => {
     this.setState({
@@ -114,6 +118,7 @@ class MyOrders extends React.Component {
         loading={this.state.loading}
         dataSource={this.state.data}
         renderItem={(item) => (
+            <Card className="OrderCard" width="1500">
             <List.Item actions={[<CheckStatusButton order={item} />]}>
             <List.Item.Meta
               title={<Text>Your Package ID: {item.orderID}</Text>}
@@ -126,9 +131,9 @@ class MyOrders extends React.Component {
                   <Text><strong>Delivery Price: ${item.total_price}</strong></Text>
                 </>
               }
-              
             />
           </List.Item>
+          </ Card>
         )}
       />
     );
